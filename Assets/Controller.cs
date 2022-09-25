@@ -4,62 +4,54 @@ using Klak.Math;
 
 sealed class Controller : MonoBehaviour
 {
-    [SerializeField] Animator _animator = null;
+    [SerializeField] Transform _head = null;
     [SerializeField] Transform _body = null;
     [SerializeField] Transform _handL = null;
     [SerializeField] Transform _handR = null;
     [SerializeField] Transform _legL = null;
     [SerializeField] Transform _legR = null;
+    [SerializeField] uint _seed = 100;
 
-    (RigidTransform body,
-     float3 handL, float3 handR,
-     float3 legL, float3 legR) _defaults;
+    float _hipHeight;
 
     void Start()
-    {
-        var body = new RigidTransform(_body.rotation, _body.position);
-        var inv = math.inverse(body);
-        _defaults.body  = body;
-        _defaults.handL = math.transform(inv, _handL.position);
-        _defaults.handR = math.transform(inv, _handR.position);
-        _defaults.legL  = math.transform(inv, _legL .position);
-        _defaults.legR  = math.transform(inv, _legR .position);
-
-        var lshoulder = _animator.GetBoneTransform(HumanBodyBones.LeftShoulder);
-        Debug.Log(lshoulder);
-    }
+      => _hipHeight = _body.localPosition.z;
 
     void Update()
     {
-        const uint seed = 0x123;
-        var hash = new XXHash(seed);
-        var t1 = 10 + hash.Float3(0.9f, 1.1f, 1) * Time.time;
-        var t2 = 10 + hash.Float3(0.9f, 1.1f, 2) * Time.time;
-        var t3 = 10 + hash.Float3(0.9f, 1.1f, 2) * Time.time;
+        // PRNG
+        var seed = _seed;
+        var hash = new XXHash(seed++);
 
-        var t = Time.time * 14;
+        // Time parameters
+        var t_walk = Time.time * 10;
+        var t_noise = hash.Float3(0.9f, 1.1f, 1) * Time.time * 0.3f + 100;
 
-        var bpos = _defaults.body.pos * math.float3(0, 0.95f, 0) + Noise.Float3(t1, seed + 1) * 0.03f;
-        var brot = math.mul(Noise.Rotation(t1, math.float3(0.1f, 0.8f, 0.2f), seed + 2), _defaults.body.rot);
-        var handL = _defaults.handL * math.float3(0.5f, 0.5f, 0.5f) + math.float3(0, 0.08f, -0.08f) + Noise.Float3(t2, seed + 3) * 0.05f;
-        var handR = _defaults.handR * math.float3(0.5f, 0.5f, 0.5f) + math.float3(0, 0.08f, -0.08f) + Noise.Float3(t3, seed + 4) * 0.05f;
+        // Hip
+        {
+            var vert = 0.95f * _hipHeight;
+            var walk = math.sin(t_walk * 2 + math.PI * 0.25f) * 0.02f;
+            var und = Noise.Float3(t_noise * 0.6f, seed++) * 0.03f;
+            _body.localPosition = und + math.float3(0, 0, vert + walk);
+        }
 
-        bpos.y += math.sin(t * 2 + math.PI * 0.25f) * 0.02f - 0.00f;
+        // Head
+        _head.localRotation =
+          Noise.Rotation(t_noise * 0.3f, math.float3(0.3f, 0.5f, 0.3f), seed++);
 
-        var body = new RigidTransform(brot, bpos);
+        // Hand IK
+        {
+            var phi = math.sin(t_walk) * 0.5f;
+            _handL.parent.localRotation = quaternion.RotateY(-phi);
+            _handR.parent.localRotation = quaternion.RotateY(+phi);
+        }
 
-        _body.position = bpos;
-        _body.rotation = brot;
-
-        body = _defaults.body;
-        //_handL.position = math.transform(body, handL);
-        //_handR.position = math.transform(body, handR);
-        //_legL .position = math.transform(body, _defaults.legL);
-        //_legR .position = math.transform(body, _defaults.legR);
-
-        _handL.parent.localRotation = quaternion.AxisAngle(math.float3(0, 1, 0), -math.sin(t) * 0.5f);
-        _handR.parent.localRotation = quaternion.AxisAngle(math.float3(0, 1, 0),  math.sin(t) * 0.5f);
-        _legL.localPosition = math.float3(0, math.max(0, -math.cos(t)) * -0.06f, math.sin(t) *  0.12f);
-        _legR.localPosition = math.float3(0, math.max(0, +math.cos(t)) * -0.06f, math.sin(t) * -0.12f);
+        // Leg IK
+        {
+            var y = math.cos(t_walk) * -0.06f;
+            var z = math.sin(t_walk) * 0.12f;
+            _legL.localPosition = math.float3(0, math.max(0, -y), +z);
+            _legR.localPosition = math.float3(0, math.max(0, +y), -z);
+        }
     }
 }
