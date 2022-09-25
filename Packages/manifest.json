@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "com.unity.animation.rigging": "1.1.1",
+    "com.unity.render-pipelines.universal": "12.1.7",
+    "jp.keijiro.klak.math": "2.0.0",
+    "com.unity.modules.animation": "1.0.0"
+  },
+  "scopedRegistries": [
+    {
+      "name": "Keijiro",
+      "url": "https://registry.npmjs.com",
+      "scopes": [
+        "jp.keijiro"
+      ]
+    }
+  ]
+}

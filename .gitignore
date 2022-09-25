@@ -1,0 +1,13 @@
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+
+/Library
+/Logs
+/Recordings
+/Temp
+/UserSettings
+
+/Assets/MOCHIYAMA
+/Assets/MOCHIYAMA.meta
