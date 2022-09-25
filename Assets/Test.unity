@@ -1556,6 +1556,13 @@ MonoBehaviour:
   _legL: {fileID: 1742697841}
   _legR: {fileID: 164246422}
   _seed: 100
+  _walkSpeed: 10
+  _armSwing: 0.5
+  _stride: 0.12
+  _footUp: 0.06
+  _hipUp: 0.02
+  _hipShake: 0.02
+  _noise: 0.02
 --- !u!4 &1823690455
 Transform:
   m_ObjectHideFlags: 0
@@ -3434,7 +3441,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1540212485289379988}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
   m_Name: 
