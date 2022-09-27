@@ -4,6 +4,8 @@ using Klak.Math;
 
 sealed class WalkAnimation : MonoBehaviour
 {
+    #region Editable attributes
+
     [Space]
     [SerializeField] Transform _hip = null;
     [SerializeField] Transform _head = null;
@@ -21,7 +23,23 @@ sealed class WalkAnimation : MonoBehaviour
     [SerializeField, Range(0, 1)] float _hipShake = 0.2f;
     [SerializeField, Range(0, 0.2f)] float _noise = 0.02f;
 
+    #endregion
+
+    #region Public properties
+
+    public float WalkSpeed
+      { get => _walkSpeed;
+        set => _walkSpeed = value; }
+
+    #endregion
+
+    #region Private variables
+
     float _time;
+
+    #endregion
+
+    #region MonoBehavour implementation
 
     void Update()
     {
@@ -61,4 +79,6 @@ sealed class WalkAnimation : MonoBehaviour
         // Time step
         _time += Time.deltaTime * _walkSpeed;
     }
+
+    #endregion
 }
