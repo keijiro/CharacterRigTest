@@ -2,7 +2,7 @@ using UnityEngine;
 using Unity.Mathematics;
 using Klak.Math;
 
-sealed class Controller : MonoBehaviour
+sealed class WalkAnimation : MonoBehaviour
 {
     [Space]
     [SerializeField] Transform _hip = null;
