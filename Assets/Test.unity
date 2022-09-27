@@ -1553,8 +1553,8 @@ MonoBehaviour:
   _head: {fileID: 1625130645}
   _handL: {fileID: 1330655979}
   _handR: {fileID: 1651260911}
-  _legL: {fileID: 1742697841}
-  _legR: {fileID: 164246422}
+  _footL: {fileID: 1742697841}
+  _footR: {fileID: 164246422}
   _seed: 100
   _walkSpeed: 10
   _armSwing: 0.5

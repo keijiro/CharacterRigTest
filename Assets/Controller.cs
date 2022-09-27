@@ -4,12 +4,13 @@ using Klak.Math;
 
 sealed class Controller : MonoBehaviour
 {
+    [Space]
     [SerializeField] Transform _hip = null;
     [SerializeField] Transform _head = null;
     [SerializeField] Transform _handL = null;
     [SerializeField] Transform _handR = null;
-    [SerializeField] Transform _legL = null;
-    [SerializeField] Transform _legR = null;
+    [SerializeField] Transform _footL = null;
+    [SerializeField] Transform _footR = null;
     [Space]
     [SerializeField] uint _seed = 100;
     [SerializeField, Range(0, 20)] float _walkSpeed = 10;
@@ -28,14 +29,14 @@ sealed class Controller : MonoBehaviour
         var seed = _seed;
         var hash = new XXHash(seed++);
 
-        // Time parameters
+        // Time parameter
         var t_noise = hash.Float3(0.9f, 1.1f, 1) * Time.time * 0.3f + 100;
 
         // Hip target
         {
             var walk = math.sin(_time * 2 + math.PI * 0.25f) * _hipUp;
-            var und = Noise.Float3(t_noise * 8, seed++) * _noise;
-            _hip.localPosition = und + math.float3(0, walk - 0.2f * _noise, 0);
+            var move = Noise.Float3(t_noise * 8, seed++) * _noise;
+            _hip.localPosition = move + math.float3(0, walk - 0.2f * _noise, 0);
             _hip.localRotation = quaternion.RotateY(math.sin(_time) * -_hipShake);
         }
 
@@ -49,12 +50,12 @@ sealed class Controller : MonoBehaviour
             _handR.parent.localRotation = quaternion.RotateY(+phi);
         }
 
-        // Leg targets
+        // Foot targets
         {
             var y = math.cos(_time) * -_footUp;
             var z = math.sin(_time) * _stride;
-            _legL.localPosition = math.float3(0, math.min(0, -y), +z);
-            _legR.localPosition = math.float3(0, math.min(0, +y), -z);
+            _footL.localPosition = math.float3(0, math.min(0, -y), +z);
+            _footR.localPosition = math.float3(0, math.min(0, +y), -z);
         }
 
         // Time step
