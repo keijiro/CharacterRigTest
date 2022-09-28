@@ -17,8 +17,8 @@ sealed class Controller : MonoBehaviour
     // Input / normalized speed vector
     (float2 input, float2 normalized) _speed;
 
-    // Animation driver and its default values
-    (WalkAnimation driver, float defaultSpeed) _anim;
+    // Animation driver
+    WalkAnimation _anim;
 
     #endregion
 
@@ -32,10 +32,7 @@ sealed class Controller : MonoBehaviour
     #region MonoBehaviour implementation
 
     void Start()
-    {
-        _anim.driver = GetComponent<WalkAnimation>();
-        _anim.defaultSpeed = _anim.driver.WalkSpeed;
-    }
+      => _anim = GetComponent<WalkAnimation>();
 
     void Update()
     {
@@ -59,8 +56,7 @@ sealed class Controller : MonoBehaviour
         }
 
         // Walk animation update
-        _anim.driver.WalkSpeed =
-          _anim.defaultSpeed * math.length(_speed.normalized);
+        _anim.Amplitude = math.length(_speed.normalized);
     }
 
     #endregion

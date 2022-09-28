@@ -1593,12 +1593,12 @@ MonoBehaviour:
   _footL: {fileID: 1742697841}
   _footR: {fileID: 164246422}
   _seed: 100
-  _walkSpeed: 20
-  _armSwing: 0.5
-  _stride: 0.12
-  _footUp: 0.06
-  _hipUp: 0.02
-  _hipShake: 0.02
+  _walkSpeed: 16
+  _armSwing: 1
+  _stride: 0.2
+  _footUp: 0.14
+  _hipUp: 0.03
+  _hipShake: 0.5
   _noise: 0.02
 --- !u!4 &1823690455
 Transform:

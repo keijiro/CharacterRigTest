@@ -27,9 +27,7 @@ sealed class WalkAnimation : MonoBehaviour
 
     #region Public properties
 
-    public float WalkSpeed
-      { get => _walkSpeed;
-        set => _walkSpeed = value; }
+    public float Amplitude { get; set; }
 
     #endregion
 
@@ -52,10 +50,10 @@ sealed class WalkAnimation : MonoBehaviour
 
         // Hip target
         {
-            var walk = math.sin(_time * 2 + math.PI * 0.25f) * _hipUp;
+            var walk = math.sin(_time * 2 + math.PI * 0.25f) * _hipUp * Amplitude;
             var move = Noise.Float3(t_noise * 8, seed++) * _noise;
             _hip.localPosition = move + math.float3(0, walk - 0.2f * _noise, 0);
-            _hip.localRotation = quaternion.RotateY(math.sin(_time) * -_hipShake);
+            _hip.localRotation = quaternion.RotateY(math.sin(_time) * -_hipShake * Amplitude);
         }
 
         // Head target
@@ -63,21 +61,21 @@ sealed class WalkAnimation : MonoBehaviour
 
         // Hand targets
         {
-            var phi = math.sin(_time) * _armSwing;
+            var phi = math.sin(_time) * _armSwing * Amplitude;
             _handL.parent.localRotation = quaternion.RotateY(-phi);
             _handR.parent.localRotation = quaternion.RotateY(+phi);
         }
 
         // Foot targets
         {
-            var y = math.cos(_time) * -_footUp;
-            var z = math.sin(_time) * _stride;
+            var y = math.cos(_time) * -_footUp * Amplitude;
+            var z = math.sin(_time) * _stride * Amplitude;
             _footL.localPosition = math.float3(0, math.min(0, -y), +z);
             _footR.localPosition = math.float3(0, math.min(0, +y), -z);
         }
 
         // Time step
-        _time += Time.deltaTime * _walkSpeed;
+        _time += Time.deltaTime * _walkSpeed * Amplitude;
     }
 
     #endregion
