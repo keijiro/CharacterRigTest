@@ -8,7 +8,6 @@ sealed class WalkAnimation : MonoBehaviour
 
     [Space]
     [SerializeField] Transform _hip = null;
-    [SerializeField] Transform _head = null;
     [SerializeField] Transform _handL = null;
     [SerializeField] Transform _handR = null;
     [SerializeField] Transform _footL = null;
@@ -55,9 +54,6 @@ sealed class WalkAnimation : MonoBehaviour
             _hip.localPosition = move + math.float3(0, walk - 0.2f * _noise, 0);
             _hip.localRotation = quaternion.RotateY(math.sin(_time) * -_hipShake * Amplitude);
         }
-
-        // Head target
-        _head.localPosition = Noise.Float3(t_noise * 1.4f, seed++) * 0.5f;
 
         // Hand targets
         {
