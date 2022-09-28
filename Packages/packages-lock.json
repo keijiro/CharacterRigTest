@@ -108,6 +108,15 @@
       },
       "url": "https://registry.npmjs.com"
     },
+    "jp.keijiro.klak.motion": {
+      "version": "1.0.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.1"
+      },
+      "url": "https://registry.npmjs.com"
+    },
     "com.unity.modules.animation": {
       "version": "1.0.0",
       "depth": 0,

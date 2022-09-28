@@ -4,6 +4,7 @@
     "com.unity.inputsystem": "1.4.2",
     "com.unity.render-pipelines.universal": "12.1.7",
     "jp.keijiro.klak.math": "2.0.0",
+    "jp.keijiro.klak.motion": "1.0.2",
     "com.unity.modules.animation": "1.0.0"
   },
   "scopedRegistries": [
