@@ -99,15 +99,6 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
-    "com.unity.visualeffectgraph": {
-      "version": "12.1.7",
-      "depth": 0,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.shadergraph": "12.1.7",
-        "com.unity.render-pipelines.core": "12.1.7"
-      }
-    },
     "jp.keijiro.klak.math": {
       "version": "2.0.0",
       "depth": 0,
@@ -135,25 +126,6 @@
       },
       "url": "https://registry.npmjs.com"
     },
-    "jp.keijiro.shadergraphassets": {
-      "version": "1.0.4",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.shadergraph": "10.0.0"
-      },
-      "url": "https://registry.npmjs.com"
-    },
-    "jp.keijiro.vfxgraphassets": {
-      "version": "1.1.2",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.visualeffectgraph": "12.1.0",
-        "jp.keijiro.shadergraphassets": "1.0.4"
-      },
-      "url": "https://registry.npmjs.com"
-    },
     "com.unity.modules.animation": {
       "version": "1.0.0",
       "depth": 0,
@@ -169,6 +141,12 @@
     "com.unity.modules.jsonserialize": {
       "version": "1.0.0",
       "depth": 2,
+      "source": "builtin",
+      "dependencies": {}
+    },
+    "com.unity.modules.particlesystem": {
+      "version": "1.0.0",
+      "depth": 0,
       "source": "builtin",
       "dependencies": {}
     },
