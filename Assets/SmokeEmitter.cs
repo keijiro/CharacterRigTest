@@ -28,13 +28,18 @@ sealed class SmokeEmitter : MonoBehaviour
 
     void LateUpdate()
     {
+        var dt = Time.deltaTime;
         var pos = (float3)transform.position;
-        var vel = math.length(pos - _prev) / Time.deltaTime;
+        var vel = math.length(pos - _prev) / dt;
 
-        _accum += _emissionRate.Evaluate(vel);
+        _accum += _emissionRate.Evaluate(vel) * dt;
 
-        _fx.Emit((int)_accum);
-        _accum -= math.floor(_accum);
+        var count = (int)_accum;
+        if (count > 0)
+        {
+            _fx.Emit(count);
+            _accum -= count;
+        }
 
         _prev = pos;
     }
