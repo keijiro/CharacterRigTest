@@ -71,7 +71,7 @@ sealed class WalkAnimation : MonoBehaviour
         }
 
         // Time step
-        _time += Time.deltaTime * _walkSpeed * Amplitude;
+        _time += Time.deltaTime * _walkSpeed * math.pow(Amplitude, 0.5f);
     }
 
     #endregion

@@ -12,7 +12,7 @@ sealed class Controller : MonoBehaviour
 
     #endregion
 
-    #region Private variables
+    #region Private members
 
     // Input / normalized speed vector
     (float2 input, float2 normalized) _speed;
@@ -20,12 +20,16 @@ sealed class Controller : MonoBehaviour
     // Animation driver
     WalkAnimation _anim;
 
+    // 
+    float2 ProjectToUnitCircle(float2 v)
+      => v / math.max(1, math.length(v));
+
     #endregion
 
     #region Player input callback
 
     public void OnPlayerMove(InputAction.CallbackContext ctx)
-      => _speed.input = math.normalizesafe((float2)ctx.ReadValue<Vector2>());
+      => _speed.input = ProjectToUnitCircle(ctx.ReadValue<Vector2>());
 
     #endregion
 
@@ -42,7 +46,9 @@ sealed class Controller : MonoBehaviour
 
         // Position step
         var pos = (float3)transform.position;
-        pos.xz += _speed.normalized * _maxSpeed * Time.deltaTime;
+        var vel = _speed.normalized * _maxSpeed;
+        vel *= math.lerp(0.5f, 1, math.length(_speed.normalized));
+        pos.xz += vel * Time.deltaTime;
         transform.position = pos;
 
         // Rotation step
